@@ -5,4 +5,5 @@ void InitTimer1(void);
 void InitTimer4(void);
 extern unsigned long timestamp;
 void SetFreqTimer1(float);
+void SetFreqTimer4(float);
 #endif /* TIMER_H */
