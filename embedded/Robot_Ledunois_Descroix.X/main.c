@@ -155,6 +155,17 @@ void OperatingSystemLoop(void) {
         case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
             SetNextRobotStateInAutomaticMode();
             break;
+        case STATE_ATTENTE_TOURNE:
+            timestamp=0;
+            PWMSetSpeedConsigne(0, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(0, MOTEUR_GAUCHE);
+            PWMUpdateSpeed();
+            stateRobot = STATE_ATTENTE_TOURNE_EN_COURS;
+            break;
+        case STATE_ATTENTE_TOURNE_EN_COURS:
+            if (timestamp > 1800)
+                SetNextRobotStateInAutomaticMode();
+            break;
         default:
             stateRobot = STATE_ATTENTE;
             break;
@@ -179,8 +190,9 @@ void SetNextRobotStateInAutomaticMode() {
     
     
     switch(sensorState)
-    {
-        case 0b00000:
+    {    
+    
+      case 0b00000:
             nextStateRobot = STATE_AVANCE;
         break;
         case 0b00001:
@@ -190,7 +202,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_GAUCHE;
         break; 
         case 0b00100:
-            nextStateRobot = STATE_ATTENTE;
+            nextStateRobot = STATE_ATTENTE_TOURNE ;
         break; 
         case 0b01000:
             nextStateRobot = STATE_TOURNE_DROITE;
@@ -236,8 +248,37 @@ void SetNextRobotStateInAutomaticMode() {
         break;
         case 0b11001:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
-        break;
-        
+            break;
+        case 0b10101:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
+            break;
+        case 0b10011:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
+            break;
+        case 0b01011:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
+            break;
+        case 0b00111:
+            nextStateRobot = STATE_TOURNE_GAUCHE;
+            break;
+        case 0b11110:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
+            break;
+        case 0b11101:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
+            break;
+        case 0b11011:
+            nextStateRobot = STATE_AVANCE;
+            break;
+        case 0b10111:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
+            break;
+        case 0b01111:
+            nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
+            break;
+        case 0b11111:
+            nextStateRobot = STATE_DEMI_TOUR;
+            break;
         
     }
             
