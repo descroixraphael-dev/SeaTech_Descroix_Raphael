@@ -40,9 +40,9 @@ int main(void) {
 
     //    PWMSetSpeed(10,MOTEUR_DROIT);
     //    PWMSetSpeed(10,MOTEUR_GAUCHE);
-//    PWMSetSpeedConsigne(20, MOTEUR_GAUCHE);
-//    PWMSetSpeedConsigne(20, MOTEUR_DROIT);
-//    PWMUpdateSpeed();
+    //PWMSetSpeedConsigne(20, MOTEUR_GAUCHE);
+    //PWMSetSpeedConsigne(20, MOTEUR_DROIT);
+    //PWMUpdateSpeed();
     /***********************************************************************************************/
     // Boucle Principale
 
@@ -110,8 +110,9 @@ void OperatingSystemLoop(void) {
             PWMSetSpeedConsigne(0, MOTEUR_DROIT);
             PWMSetSpeedConsigne(0, MOTEUR_GAUCHE);
             stateRobot = STATE_ATTENTE_EN_COURS;
+            break;
         case STATE_ATTENTE_EN_COURS:
-            if (timestamp > 5000)
+            if (timestamp > 2000)
                 stateRobot = STATE_AVANCE;
             break;
         case STATE_AVANCE:
@@ -121,23 +122,26 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_AVANCE_EN_COURS;
             break;
         case STATE_AVANCE_EN_COURS:
-            SetNextRobotStateInAutomaticMode();
+            if (timestamp > 1000)
+                SetNextRobotStateInAutomaticMode();
             break;
         case STATE_TOURNE_GAUCHE:
-            PWMSetSpeedConsigne(30, MOTEUR_DROIT);
-            PWMSetSpeedConsigne(0, MOTEUR_GAUCHE);
+            PWMSetSpeedConsigne(-15, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(30, MOTEUR_GAUCHE);
             stateRobot = STATE_TOURNE_GAUCHE_EN_COURS;
             break;
         case STATE_TOURNE_GAUCHE_EN_COURS:
-            SetNextRobotStateInAutomaticMode();
+            if (timestamp > 1000)    
+                SetNextRobotStateInAutomaticMode();
             break;
         case STATE_TOURNE_DROITE:
-            PWMSetSpeedConsigne(0, MOTEUR_DROIT);
-            PWMSetSpeedConsigne(30, MOTEUR_GAUCHE);
+            PWMSetSpeedConsigne(30, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(0, MOTEUR_GAUCHE);
             stateRobot = STATE_TOURNE_DROITE_EN_COURS;
             break;
         case STATE_TOURNE_DROITE_EN_COURS:
-            SetNextRobotStateInAutomaticMode();
+            if (timestamp > 1000)
+                SetNextRobotStateInAutomaticMode();
             break;
         case STATE_TOURNE_SUR_PLACE_GAUCHE:
             PWMSetSpeedConsigne(-15, MOTEUR_DROIT);
@@ -145,7 +149,8 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS;
             break;
         case STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS:
-            SetNextRobotStateInAutomaticMode();
+            if (timestamp > 1000)
+                SetNextRobotStateInAutomaticMode();
             break;
         case STATE_TOURNE_SUR_PLACE_DROITE:
             PWMSetSpeedConsigne(15, MOTEUR_DROIT);
@@ -153,7 +158,8 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS;
             break;
         case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
-            SetNextRobotStateInAutomaticMode();
+            if (timestamp > 1000)    
+                SetNextRobotStateInAutomaticMode();
             break;
         case STATE_ATTENTE_TOURNE:
             timestamp=0;
@@ -163,17 +169,17 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_ATTENTE_TOURNE_EN_COURS;
             break;
         case STATE_ATTENTE_TOURNE_EN_COURS:
-            if (timestamp > 1800)
+            if (timestamp > 1000)
                 stateRobot =STATE_TOURNE_SUR_PLACE_DROITE;
             break;
         case STATE_RECULE:
             PWMSetSpeedConsigne(30, MOTEUR_DROIT);
             PWMSetSpeedConsigne(-30, MOTEUR_GAUCHE);
             PWMUpdateSpeed();
-            stateRobot = STATE_AVANCE_EN_COURS;
+            stateRobot = STATE_RECULE_EN_COURS;
             break;
         case STATE_RECULE_EN_COURS:
-            if (timestamp > 1800)
+            if (timestamp > 1000)
                 SetNextRobotStateInAutomaticMode();
             break;
         case STATE_DEMI_TOUR:    
@@ -183,7 +189,7 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_DEMI_TOUR_EN_COURS;
             break;
         case STATE_DEMI_TOUR_EN_COURS:
-            if (timestamp > 1800)
+            if (timestamp > 1000)
                 stateRobot=STATE_TOURNE_SUR_PLACE_DROITE;
             break;
 
@@ -223,7 +229,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_GAUCHE;
         break; 
         case 0b00100:
-            nextStateRobot = STATE_DEMI_TOUR ;
+            nextStateRobot = STATE_RECULE ;
         break; 
         case 0b01000:
             nextStateRobot = STATE_TOURNE_DROITE;
@@ -247,7 +253,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_GAUCHE;
         break;
         case 0b01010:
-            nextStateRobot = STATE_RECULE;
+            nextStateRobot = STATE_AVANCE;
         break;
         case 0b10010:
             nextStateRobot = STATE_TOURNE_GAUCHE;
