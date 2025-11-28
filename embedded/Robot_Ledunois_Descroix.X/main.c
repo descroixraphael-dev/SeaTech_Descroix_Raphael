@@ -48,7 +48,7 @@ int main(void) {
 
     while (1) {
         
-        if (ADCIsConversionFinished() == 1) {
+       if (ADCIsConversionFinished() == 1) {
             ADCClearConversionFinishedFlag();
            
             unsigned int * result = ADCGetResult();
@@ -164,8 +164,29 @@ void OperatingSystemLoop(void) {
             break;
         case STATE_ATTENTE_TOURNE_EN_COURS:
             if (timestamp > 1800)
+                stateRobot =STATE_TOURNE_SUR_PLACE_DROITE;
+            break;
+        case STATE_RECULE:
+            PWMSetSpeedConsigne(30, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(-30, MOTEUR_GAUCHE);
+            PWMUpdateSpeed();
+            stateRobot = STATE_AVANCE_EN_COURS;
+            break;
+        case STATE_RECULE_EN_COURS:
+            if (timestamp > 1800)
                 SetNextRobotStateInAutomaticMode();
             break;
+        case STATE_DEMI_TOUR:    
+                PWMSetSpeedConsigne(30, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(-30, MOTEUR_GAUCHE);
+            PWMUpdateSpeed();
+            stateRobot = STATE_DEMI_TOUR_EN_COURS;
+            break;
+        case STATE_DEMI_TOUR_EN_COURS:
+            if (timestamp > 1800)
+                stateRobot=STATE_TOURNE_SUR_PLACE_DROITE;
+            break;
+
         default:
             stateRobot = STATE_ATTENTE;
             break;
@@ -202,7 +223,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_GAUCHE;
         break; 
         case 0b00100:
-            nextStateRobot = STATE_ATTENTE_TOURNE ;
+            nextStateRobot = STATE_DEMI_TOUR ;
         break; 
         case 0b01000:
             nextStateRobot = STATE_TOURNE_DROITE;
@@ -226,7 +247,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_GAUCHE;
         break;
         case 0b01010:
-            nextStateRobot = STATE_AVANCE;
+            nextStateRobot = STATE_RECULE;
         break;
         case 0b10010:
             nextStateRobot = STATE_TOURNE_GAUCHE;
@@ -261,6 +282,9 @@ void SetNextRobotStateInAutomaticMode() {
         case 0b00111:
             nextStateRobot = STATE_TOURNE_GAUCHE;
             break;
+        case 0b01110:
+            nextStateRobot=STATE_DEMI_TOUR;
+            break;
         case 0b11110:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
@@ -268,7 +292,7 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
         case 0b11011:
-            nextStateRobot = STATE_AVANCE;
+            nextStateRobot = STATE_RECULE;
             break;
         case 0b10111:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;

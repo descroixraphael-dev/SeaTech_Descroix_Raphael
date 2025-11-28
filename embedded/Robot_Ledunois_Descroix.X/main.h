@@ -27,10 +27,8 @@
 #define STATE_DEMI_TOUR_EN_COURS 17
 #define STATE_ATTENTE_TOURNE 18
 #define STATE_ATTENTE_TOURNE_EN_COURS 19
-#define PAS_D_OBSTACLE 0
-#define OBSTACLE_A_GAUCHE 1
-#define OBSTACLE_A_DROITE 2
-#define OBSTACLE_EN_FACE 3
+
+
 
 void OperatingSystemLoop(void);
 void SetNextRobotStateInAutomaticMode(void);
