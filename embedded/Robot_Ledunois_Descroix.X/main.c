@@ -19,7 +19,7 @@
 unsigned int ADCValue0;
 unsigned int ADCValue1;
 unsigned int ADCValue2;
-
+robotState.isStarted = 0;
 int main(void) {
     /***********************************************************************************************/
     //Initialisation oscillateur
