@@ -18,4 +18,5 @@ unsigned char isStarted : 1;
 };
 } ROBOT_STATE_BITS;
 extern volatile ROBOT_STATE_BITS robotState;
+void HandleStartButton(void); 
 #endif /* ROBOT_H */
