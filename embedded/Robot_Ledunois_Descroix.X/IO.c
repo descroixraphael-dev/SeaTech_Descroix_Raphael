@@ -26,22 +26,23 @@ void InitIO()
     _TRISJ4 = 0; // LED Bleue
     _TRISJ11 = 0; // LED Rouge
     _TRISH10 = 0; // LED Verte 
+    _TRISH2=1;
     
 
     
     //****** Moteurs ************************
 
-    // Configuration des entrées
+    // Configuration des entrÃ©es
     
 
     /****************************************************************************************************/
     // Gestion des pin remappables
     /****************************************************************************************************/
-    UnlockIO(); // On unlock les registres d'entrées/sorties, ainsi que les registres des PPS
+    UnlockIO(); // On unlock les registres d'entrÃ©es/sorties, ainsi que les registres des PPS
     
     //Assignation des remappable pins
         
-    LockIO(); // On lock les registres d'entrées/sorties, ainsi que les registres des PPS
+    LockIO(); // On lock les registres d'entrÃ©es/sorties, ainsi que les registres des PPS
 }
 
 
