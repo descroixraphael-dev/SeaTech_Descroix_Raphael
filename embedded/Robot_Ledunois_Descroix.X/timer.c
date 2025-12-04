@@ -85,10 +85,10 @@ void InitTimer4(void) {
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
     IFS1bits.T4IF = 0;
     timestamp++;
-    //LED_BLANCHE_1 = !LED_BLANCHE_1;
-    //ADC1StartConversionSequence();
-    OperatingSystemLoop();
-   
+    HandleStartButton();
+    if(robotState.isStarted == 1){
+        OperatingSystemLoop();
+    }
     //IFS1bits.T4IF =1;
 
 }
