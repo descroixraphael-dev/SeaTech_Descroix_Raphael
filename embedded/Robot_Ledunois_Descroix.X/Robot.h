@@ -13,6 +13,7 @@ float distanceTelemetreCentre;
 float distanceTelemetreGauche;
 float distanceTelemetreexDroit;
 float distanceTelemetreexGauche;
+unsigned char isStarted : 1;
 };
 };
 } ROBOT_STATE_BITS;
