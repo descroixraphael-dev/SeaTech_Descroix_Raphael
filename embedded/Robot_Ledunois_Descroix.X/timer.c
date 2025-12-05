@@ -4,6 +4,7 @@
 #include"PWM.h"
 #include "ADC.h"
 #include "main.h"
+#include "Robot.h"
 #define FCY 60000000
 //Initialisation d?un timer 16 bits
 
@@ -16,7 +17,7 @@ void InitTimer1(void) {
     //10 = 1:64 prescale value
     //01 = 1:8 prescale value
     //00 = 1:1 prescale value
-    SetFreqTimer1(50);
+    SetFreqTimer1(250);
     T1CONbits.TCS = 0; //clock source = internal clock
     IFS0bits.T1IF = 0; // Clear Timer Interrupt Flag
     IEC0bits.T1IE = 1; // Enable Timer interrupt
@@ -85,10 +86,9 @@ void InitTimer4(void) {
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
     IFS1bits.T4IF = 0;
     timestamp++;
-    HandleStartButton();
-    if(robotState.isStarted == 1){
+    
         OperatingSystemLoop();
-    }
+    
     //IFS1bits.T4IF =1;
 
 }

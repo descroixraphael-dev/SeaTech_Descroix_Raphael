@@ -1,22 +1,25 @@
 #ifndef ROBOT_H
 #define ROBOT_H
+
 typedef struct robotStateBITS {
-union {
-struct {
-unsigned char taskEnCours;
-float vitesseGaucheConsigne;
-float vitesseGaucheCommandeCourante;
-float vitesseDroiteConsigne;
-float vitesseDroiteCommandeCourante;
-float distanceTelemetreDroit;
-float distanceTelemetreCentre;
-float distanceTelemetreGauche;
-float distanceTelemetreexDroit;
-float distanceTelemetreexGauche;
-unsigned char isStarted : 1;
-};
-};
+
+    union {
+
+        struct {
+            unsigned char taskEnCours;
+            float vitesseGaucheConsigne;
+            float vitesseGaucheCommandeCourante;
+            float vitesseDroiteConsigne;
+            float vitesseDroiteCommandeCourante;
+            float distanceTelemetreDroit;
+            float distanceTelemetreCentre;
+            float distanceTelemetreGauche;
+            float distanceTelemetreexDroit;
+            float distanceTelemetreexGauche;
+            
+        };
+    };
 } ROBOT_STATE_BITS;
 extern volatile ROBOT_STATE_BITS robotState;
-void HandleStartButton(void); 
+
 #endif /* ROBOT_H */

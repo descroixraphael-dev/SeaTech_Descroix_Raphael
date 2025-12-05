@@ -7,7 +7,7 @@
 #define LED_ORANGE_1 _LATJ4 
 #define LED_ROUGE_1 _LATJ11
 #define LED_VERTE_1 _LATH10
-#define BOUTON_START _RH0
+
 // Prototypes fonctions
 void InitIO();
 void LockIO();
